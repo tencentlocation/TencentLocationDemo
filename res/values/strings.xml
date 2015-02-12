@@ -2,32 +2,6 @@
 <resources>
 
     <string name="app_name">TencentLocationDemo</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-
-    <string-array name="entries_coord_type">
-        <item>WGS84</item>
-        <item>GCJ-02</item>
-    </string-array>
-    <string-array name="entryvalues_coord_type">
-        <item>0</item>
-        <item>1</item>
-    </string-array>
-    <string-array name="entries_level">
-        <item>Geo</item>
-        <item>Name</item>
-        <item>AdminArea</item>
-        <item>Poi</item>
-        <item>Global-AdminArea</item>
-    </string-array>
-    <string-array name="entryvalues_level">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-    </string-array>
-
     <string name="build">build: %1$s</string>
     <string name="version">version: %1$s</string>
     <string name="key">key: %1$s</string>
