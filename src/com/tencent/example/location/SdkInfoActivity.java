@@ -49,21 +49,26 @@ public class SdkInfoActivity extends Activity {
 	}
 
 	private void updateUi() {
+		TencentLocationManager mgr = TencentLocationManager.getInstance(this);
 		// 显示 build 号
-		mTvBuild.setText(String.format(getString(R.string.build),
-				TencentLocationManager.BUILD));
+		mTvBuild.setText(String.format(getString(R.string.build), mgr.getBuild()));
 
 		// 显示 版本号
-		mTvVersion.setText(String.format(getString(R.string.version),
-				TencentLocationManager.VERSION));
+		mTvVersion.setText(String.format(getString(R.string.version), mgr.getVersion()));
 
 		// 显示 key
-		mTvKey.setText(String.format(getString(R.string.key),
-				DemoUtils.getKey(this)));
+		mTvKey.setText(String.format(getString(R.string.key), mgr.getKey()));
 
 		// 显示 gps 状态
-		mGps.setText(String.format(getString(R.string.gps), mLocationManager
-				.isProviderEnabled(LocationManager.GPS_PROVIDER) ? "开启" : "关闭"));
+		boolean gpsEnabled = false;
+
+		/* 防止BITA平台兼容性测试时潜在的权限禁止问题导致测试失败 */
+		try {
+			gpsEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		} catch (Exception e) {
+			gpsEnabled = false;
+		}
+		mGps.setText(String.format(getString(R.string.gps), gpsEnabled ? "开启" : "关闭"));
 
 		// 显示 wifi 状态
 		mWifi.setText(String.format(getString(R.string.wifi), mWifiManager
