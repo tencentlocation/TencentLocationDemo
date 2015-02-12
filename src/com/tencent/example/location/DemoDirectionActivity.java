@@ -3,6 +3,7 @@ package com.tencent.example.location;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
@@ -40,7 +42,7 @@ public class DemoDirectionActivity extends Activity implements
 				.setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_GEO)
 				.setInterval(500).setAllowDirection(true), this);
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -69,17 +71,17 @@ public class DemoDirectionActivity extends Activity implements
 
 	public static class DirectionView extends View {
 		private static final float OFFSET = 0f;
-		
+
 		private Handler mHandler;
 
 		private Paint mPaint;
 		private Paint mPen;
 		private double mDir;
 		private Bitmap mBmp;
-		
+
 		private int mBmpW;
 		private int mBmpH;
-		
+
 		public void updateDirection(double direction) {
 			if (!Double.isNaN(direction)) {
 				mDir = direction;
@@ -114,16 +116,16 @@ public class DemoDirectionActivity extends Activity implements
 					}
 				}
 			};
-			
+
 			mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mPaint.setStyle(Style.STROKE);
 			mPaint.setStrokeWidth(2f);
 			mPaint.setColor(Color.RED);
 
 			mPen = new Paint(Paint.ANTI_ALIAS_FLAG);
-			mPen.setTextSize(50f);
+			mPen.setTextSize(getRawSize(TypedValue.COMPLEX_UNIT_SP, 20));
 			mPen.setColor(Color.BLACK);
-			
+
 			mBmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_pointer);
 			mBmpW = mBmp.getWidth() / 2;
 			mBmpH = mBmp.getHeight() / 2;
@@ -142,26 +144,39 @@ public class DemoDirectionActivity extends Activity implements
 			canvas.drawText("北", w / 2, h / 2 - r + OFFSET, mPen);
 			canvas.drawText("南", w / 2, h / 2 + r - OFFSET, mPen);
 			canvas.drawText("西", w / 2 - r + OFFSET, h / 2, mPen);
-			canvas.drawText("东", w / 2 + r - 40, h / 2, mPen);
-			
+			canvas.drawText("东", w / 2 + r - 30, h / 2, mPen);
+
 			canvas.save();
 			// 由于方向图标箭头向左, 有必要调整到向北
 			canvas.rotate(-90, w / 2, h / 2);
-			
+
 			// 根据定位SDK获得的方向旋转箭头
 			canvas.rotate((float) mDir, w / 2, h / 2);
-			
+
 			canvas.translate(w / 2 - mBmpW, h / 2 - mBmpH);
 			canvas.drawBitmap(mBmp, 0, 0, null);
 			canvas.restore();
-			
+
 			mHandler.sendEmptyMessageDelayed(0, 50);
 		}
-		
+
 		@Override
 		protected void onDetachedFromWindow() {
 			super.onDetachedFromWindow();
 			mHandler.removeCallbacksAndMessages(null);
 		}
+
+		private float getRawSize(int unit, float size) {
+		       Context c = getContext();
+		       Resources r;
+
+		       if (c == null)
+		           r = Resources.getSystem();
+		       else
+		           r = c.getResources();
+
+		       return TypedValue.applyDimension(unit, size, r.getDisplayMetrics());
+		}
+
 	}
 }
