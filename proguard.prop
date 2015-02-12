@@ -1,0 +1,13 @@
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    public void on*Event(...);
+}
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+-dontwarn  org.eclipse.jdt.annotation.**
+
+# sdk版本小于18时需要
+-dontwarn  android.location.Location
+
+-dontnote ct.**
