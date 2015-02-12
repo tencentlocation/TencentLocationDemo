@@ -18,5 +18,6 @@
     <string name="btn_add">添加</string>
     <string name="btn_del">删除</string>
     <string name="btn_stop">停止测试</string>
+    <string name="set_name">取个名字吧</string>
 
 </resources>

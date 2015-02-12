@@ -19,6 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/location"
         android:ems="10"
-        android:hint="取个名字吧" />
+        android:hint="@string/set_name" />
 
 </RelativeLayout>
