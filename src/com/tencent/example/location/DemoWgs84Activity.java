@@ -29,6 +29,8 @@ public class DemoWgs84Activity extends Activity implements
 		mLocationStatus = (TextView) findViewById(R.id.status);
 		mLocationManager = TencentLocationManager.getInstance(this);
 
+		/* 保证调整坐标系前已停止定位 */
+		mLocationManager.removeUpdates(null);
 		// 设置 wgs84 坐标系
 		mLocationManager
 				.setCoordinateType(TencentLocationManager.COORDINATE_TYPE_WGS84);
@@ -38,10 +40,10 @@ public class DemoWgs84Activity extends Activity implements
 	protected void onDestroy() {
 		super.onDestroy();
 
-		/**
+		/*
 		 * 注意, 本示例中 requestLocationUpdates 和 removeUpdates 都可能被多次重复调用.
 		 * <p>
-		 * 重复调用 requestLocationUpdates, 将忽略之前的 reqest 并自动取消之前的 listener, 并使用最新的
+		 * 重复调用 requestLocationUpdates, 将忽略之前的 request 并自动取消之前的 listener, 并使用最新的
 		 * request 和 listener 继续定位
 		 * <p>
 		 * 重复调用 removeUpdates, 定位停止
