@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
@@ -107,6 +108,14 @@ public class DemoStatusActivity extends Activity implements
 	public void onStatusUpdate(String name, int status, String desc) {
 		String message = "{name=" + name + ", new status=" + status + ", desc="
 				+ desc + "}";
+
+		if (status == STATUS_DENIED) {
+			/* 检测到定位权限被内置或第三方的权限管理或安全软件禁用, 导致当前应用**很可能无法定位**
+			 * 必要时可对这种情况进行特殊处理, 比如弹出提示或引导
+			 */
+			Toast.makeText(this, "定位权限被禁用!", Toast.LENGTH_SHORT).show();
+		}
+
 		updateLocationStatus(message);
 	}
 
